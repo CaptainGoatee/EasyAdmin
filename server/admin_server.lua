@@ -267,6 +267,9 @@ Citizen.CreateThread(function()
 		if GetConvar("ea_enableCallAdminCommand", "true") == "true" then
 			TriggerClientEvent('chat:addSuggestion', source, '/'..GetConvar("ea_callAdminCommandName", "calladmin"), "Call Admin", {{name='reason', help="Reason"}})
 		end
+		if GetConvar("ea_enableCallAdminRevokeCommand", "true") == "true" then
+			TriggerClientEvent('chat:addSuggestion', source, '/'..GetConvar("ea_callAdminRevokeCommandName", "canceladmin"), "Cancel Admin Call")
+		end
 
 		
 

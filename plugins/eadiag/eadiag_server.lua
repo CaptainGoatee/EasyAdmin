@@ -31,6 +31,7 @@ Citizen.CreateThread(function()
 				ea_defaultKey = GetConvar("ea_defaultKey", "none"),
 				ea_alwaysShowButtons = GetConvar("ea_alwaysShowButtons", "false"),
 				ea_enableCallAdminCommand = GetConvar("ea_enableCallAdminCommand", "true"),
+				ea_enableCallAdminRevokeCommand = GetConvar("ea_enableCallAdminRevokeCommand", "true"),
 				ea_enableReportCommand = GetConvar("ea_enableReportCommand", "true"),
 				ea_defaultMinReports = GetConvarInt("ea_defaultMinReports", 3),
 				ea_MinReportPlayers = GetConvarInt("ea_MinReportPlayers", 12),

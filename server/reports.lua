@@ -58,6 +58,46 @@ Citizen.CreateThread(function()
             end
         end, false)
     end
+    if GetConvar("ea_enableCallAdminRevokeCommand", "true") == "true" then
+        RegisterCommand(GetConvar("ea_callAdminRevokeCommandName", "canceladmin"), function(source, args, rawCommand)
+            -- local time = os.time()
+            local source = source
+            -- if cooldowns[source] and cooldowns[source] > (time - cooldowntime) then
+            --     TriggerClientEvent("EasyAdmin:showNotification", source, GetLocalisedText("waitbeforeusingagain"))
+            --     return
+            -- end
+            local existingReports = false
+            -- local reason = string.gsub(rawCommand, GetConvar("ea_callAdminCommandName", "calladmin") .. " ", "")
+            for i, report in pairs(reports) do
+                if report.reporter == source then
+                    removeReport(report.id)
+                    existingReports = true
+                end
+            end
+
+            if existingReports == false then
+                TriggerClientEvent("EasyAdmin:showNotification", source, GetLocalisedText("admincancelfailed"))
+            else
+                -- for i, _ in pairs(OnlineAdmins) do
+                --     local notificationText = string.format(
+                --         string.gsub(GetLocalisedText("playercalledforadmin"), "```", ""), getName(source, true, false),
+                --         reason, reportid)
+                --     TriggerClientEvent("EasyAdmin:showNotification", i, notificationText)
+                -- end
+
+
+                local preferredWebhook = (reportNotification ~= "false") and reportNotification or moderationNotification
+                SendWebhookMessage(preferredWebhook,
+                    string.format(GetLocalisedText("playercancelledadmin"), getName(source, true, true)),
+                    "canceladmin", 16776960)
+                --TriggerClientEvent('chatMessage', source, "^3EasyAdmin^7", {255,255,255}, GetLocalisedText("admincalled"))
+                TriggerClientEvent("EasyAdmin:showNotification", source, GetLocalisedText("admincancelled"))
+
+                -- time = os.time()
+                -- cooldowns[source] = time
+            end
+        end, false)
+    end
     if GetConvar("ea_enableReportCommand", "true") == "true" then
         RegisterCommand(GetConvar("ea_reportCommandName", "report"), function(source, args, rawCommand)
             if args[2] then
